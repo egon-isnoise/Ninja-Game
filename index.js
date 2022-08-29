@@ -67,6 +67,14 @@ const player = new Fighter({
         attack1: {
             imageSrc: './img/samuraiMack/Attack1.png',
             framesMax: 6
+        }, 
+        takeHit: {
+            imageSrc: './img/samuraiMack/Take Hit - white silhouette.png',
+            framesMax: 4
+        },
+        death: {
+            imageSrc: './img/samuraiMack/Death.png',
+            framesMax: 6
         }
     },
     attackBox: {
@@ -121,6 +129,14 @@ const enemy = new Fighter({
         attack1: {
             imageSrc: './img/kenji/Attack1.png',
             framesMax: 4
+        },
+        takeHit: {
+            imageSrc: './img/kenji/Take hit.png',
+            framesMax: 3
+        },
+        death: {
+            imageSrc: './img/kenji/Death.png',
+            framesMax: 7
         }
     },
     attackBox: {
@@ -158,6 +174,8 @@ function animate() {
 
     background.update();
     shop.update();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.15)'
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     player.update();
     enemy.update();
 
@@ -209,10 +227,12 @@ function animate() {
         player.isAttacking && 
         player.framesCurrent === 4
         ){
+        enemy.takeHit();
         player.isAttacking = false;
         console.log("Hit!!");
-        enemy.health -= 20;
-        document.querySelector('#enemyHealth').style.width = enemy.health + '%';
+        gsap.to('#enemyHealth', {
+            width: enemy.health + '%'
+        })
     }
 
     // if player misses 
@@ -229,10 +249,12 @@ function animate() {
         enemy.isAttacking && 
         enemy.framesCurrent === 2
         ){
+        player.takeHit();
         enemy.isAttacking = false;
         console.log("Enemy attack hit!");
-        player.health -= 20;
-        document.querySelector('#playerHealth').style.width = player.health + '%';
+        gsap.to('#playerHealth', {
+            width: player.health + '%'
+        })
     }
 
      // if enemy misses 
@@ -248,38 +270,44 @@ function animate() {
 animate();
 
 window.addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'd':
-            keys.d.pressed = true;
-            player.lastKey = 'd';
-            break
-        case 'a':
-            keys.a.pressed = true;
-            player.lastKey = 'a';
-            break
-        case 'w':
-            player.velocity.y = -15;
-            break
-        case ' ':
-            player.attack();
-            break
-
-
-        case 'ArrowRight':
-            keys.ArrowRight.pressed = true;
-            enemy.lastKey = 'ArrowRight';
-            break
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = true;
-            enemy.lastKey = 'ArrowLeft';
-            break
-        case 'ArrowUp':
-            enemy.velocity.y = -15;
-            break
-        case 'ArrowDown':
-            enemy.attack();
-            break
+    if(!player.dead) {
+        switch (event.key) {
+            case 'd':
+                keys.d.pressed = true;
+                player.lastKey = 'd';
+                break
+            case 'a':
+                keys.a.pressed = true;
+                player.lastKey = 'a';
+                break
+            case 'w':
+                player.velocity.y = -15;
+                break
+            case ' ':
+                player.attack();
+                break
+        }
     }
+
+    if(!enemy.dead){
+        switch(event.key){
+            case 'ArrowRight':
+                keys.ArrowRight.pressed = true;
+                enemy.lastKey = 'ArrowRight';
+                break
+            case 'ArrowLeft':
+                keys.ArrowLeft.pressed = true;
+                enemy.lastKey = 'ArrowLeft';
+                break
+            case 'ArrowUp':
+                enemy.velocity.y = -15;
+                break
+            case 'ArrowDown':
+                enemy.attack();
+                break
+        }   
+    }
+
     console.log(event.key)
 });
 
