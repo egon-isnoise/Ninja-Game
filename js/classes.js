@@ -111,8 +111,8 @@ class Fighter extends Sprite {
         ctx.fillRect(
             this.attackBox.position.x, 
             this.attackBox.position.y, 
-            this.attackBox.position.width, 
-            this.attackBox.position.height,
+            this.attackBox.width, 
+            this.attackBox.height,
         );
 
         this.position.y += this.velocity.y;
