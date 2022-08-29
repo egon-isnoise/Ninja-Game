@@ -125,10 +125,10 @@ const enemy = new Fighter({
     },
     attackBox: {
         offset: {
-            x: 0,
-            y: 0
+            x: -170,
+            y: 50
         },
-        width : 100,
+        width : 170,
         height: 50
     } 
 })
@@ -206,12 +206,18 @@ function animate() {
             rect1: player,
             rect2: enemy
         }) &&
-        player.isAttacking
+        player.isAttacking && 
+        player.framesCurrent === 4
         ){
         player.isAttacking = false;
         console.log("Hit!!");
         enemy.health -= 20;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
+    }
+
+    // if player misses 
+    if (player.isAttacking && player.framesCurrent === 4){
+        player.isAttacking == false;
     }
 
     // enemy
@@ -220,12 +226,18 @@ function animate() {
             rect1: enemy,
             rect2: player
         }) &&
-        enemy.isAttacking
+        enemy.isAttacking && 
+        enemy.framesCurrent === 2
         ){
         enemy.isAttacking = false;
         console.log("Enemy attack hit!");
         player.health -= 20;
         document.querySelector('#playerHealth').style.width = player.health + '%';
+    }
+
+     // if enemy misses 
+     if (enemy.isAttacking && enemy.framesCurrent === 2){
+        enemy.isAttacking == false;
     }
 
 
