@@ -22,9 +22,11 @@ function determineWinner({player, enemy}){
 
 }
 
+let gameOn = false;
 let timer = 60;
 
 function decreaseTimer(){
+    gameOn = true;
     setTimeout(decreaseTimer, 1000);
     if(timer > 0) {
         timer --;
@@ -33,5 +35,11 @@ function decreaseTimer(){
 
     if (timer == 0){
         determineWinner({player, enemy});
+        document.querySelector('#timer').innerHTML = 'start';
+        gameOn = false;
     }
+}
+
+function resetAll(){
+    window.location.reload();
 }
