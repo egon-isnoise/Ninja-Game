@@ -5,6 +5,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" crossorigin>
+    <link rel="stylesheet" href="index.css">
+
+    
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,93 +22,121 @@
 </head>
 
 <body>
-    <!-- red container div-->
-    <div style="position: relative; display: inline-block;">
 
-        <!-- smaller container div-->
-        <div style="
-                position: absolute; 
-                display: flex; 
-                width: 100%; 
-                align-items: center; 
-                padding: 20px;
-            ">
-
-            <!--player health-->
-            <div style="
-                    position: relative; 
-                    width: 100%; 
-                    display: flex; 
-                    justify-content: flex-end;
-                    border-top: 4px solid white;
-                    border-bottom: 4px solid white;
-                    border-left: 4px solid white;
-                ">
-                <div style="background-color: red; height: 30px; width: 100%;"></div>
-                <div id="playerHealth" style="
-                        position: absolute; 
-                        background: #818cf8; 
-                        top: 0; 
-                        right: 0; 
-                        bottom: 0; 
-                        width: 100%;
-
-                    ">
+    <div class="game_container">
+        <div class="game_instructions">
+            <h1>Start/refresh: Spacebar</h1>
+            <div class="player_instructions">
+                <div class="player">
+                    <h2>Player 1</h2>
+                    <p>Attack: S </p>
+                    <p>Move Right: D </p>
+                    <p>Move Left: A </p>
+                    <p>Jump: W </p>
+                </div>
+                <div class="player">
+                    <h2>Player 2</h2>
+                    <p>Attack: Arrow Down </p>
+                    <p>Move Right: ">" </p>
+                    <p>Move Left: "<" </p>
+                    <p>Jump: Arrow Up </p>
                 </div>
             </div>
-            <div></div>
 
-            <!--timer-->
-            <div id="timer" style="
-                    background-color: black; 
-                    height: 50px; 
-                    width: 100px; 
-                    flex-shrink: 0;
-                    display: flex;
+        </div>
+    
+        <div class="game_window">
+            <!-- red container div-->
+        <div style="position: relative; display: inline-block;">
+
+            <!-- smaller container div-->
+            <div style="
+                    position: absolute; 
+                    display: flex; 
+                    width: 100%; 
+                    align-items: center; 
+                    padding: 20px;
+                ">
+
+                <!--player health-->
+                <div style="
+                        position: relative; 
+                        width: 100%; 
+                        display: flex; 
+                        justify-content: flex-end;
+                        border-top: 4px solid white;
+                        border-bottom: 4px solid white;
+                        border-left: 4px solid white;
+                    ">
+                    <div style="background-color: red; height: 30px; width: 100%;"></div>
+                    <div id="playerHealth" style="
+                            position: absolute; 
+                            background: #818cf8; 
+                            top: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            width: 100%;
+
+                        ">
+                    </div>
+                </div>
+                <div></div>
+
+                <!--timer-->
+                <div id="timer" style="
+                        background-color: black; 
+                        height: 50px; 
+                        width: 100px; 
+                        flex-shrink: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        border: 4px solid white;
+                    ">
+                    Start
+                </div>
+
+                <!--enemy health-->
+                <div style="
+                        position: relative; 
+                        width: 100%;
+                        border-top: 4px solid white;
+                        border-bottom: 4px solid white;
+                        border-right: 4px solid white;
+                    ">
+                    <div style="background-color: red; height: 30px;"></div>
+                    <div id="enemyHealth" style="
+                            position: absolute; 
+                            background: #818cf8; 
+                            top: 0; 
+                            right: 0; 
+                            bottom: 0; 
+                            left: 0;
+                        ">
+                    </div>
+                </div>
+                <div></div>
+            </div>
+            <div id="displayText" style="
+                    position: absolute; 
+                    color: white; 
                     align-items: center;
                     justify-content: center;
-                    color: white;
-                    border: 4px solid white;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    display: none;
                 ">
-                Start
+                Tie
             </div>
+            <canvas></canvas>
 
-            <!--enemy health-->
-            <div style="
-                    position: relative; 
-                    width: 100%;
-                    border-top: 4px solid white;
-                    border-bottom: 4px solid white;
-                    border-right: 4px solid white;
-                ">
-                <div style="background-color: red; height: 30px;"></div>
-                <div id="enemyHealth" style="
-                        position: absolute; 
-                        background: #818cf8; 
-                        top: 0; 
-                        right: 0; 
-                        bottom: 0; 
-                        left: 0;
-                    ">
-                </div>
-            </div>
-            <div></div>
         </div>
-        <div id="displayText" style="
-                position: absolute; 
-                color: white; 
-                align-items: center;
-                justify-content: center;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                display: none;
-            ">
-            Tie
-        </div>
-        <canvas></canvas>
+
     </div>
+    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
         integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
